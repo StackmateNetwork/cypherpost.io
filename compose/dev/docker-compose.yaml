@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  node:
+    build:
+      context: ../../app
+      dockerfile: Dockerfile.dev
+    image: stackmate-node-ts
+    container_name: cp-website
+    restart: unless-stopped
+    environment:
+      - APP_PORT=1111
+    ports:
+      - "1111:1111"
+    volumes:
+      - cp-server-code:/home/node/cypherpost.io/app
+      - cp-server-keys:/home/node/.keys
+    networks:
+      - cypherpostnetwork
+
+  nginx:
+    build:
+      context: ../../infra/nginx
+      dockerfile: Dockerfile.dev
+    image: stackmate-nginx
+    container_name: cp-server
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - cp-web-root:/var/www/html
+      - ../../infra/nginx/dev/nginx-conf:/etc/nginx/conf.d
+    depends_on:
+      - node
+    networks:
+      - cypherpostnetwork
+
+volumes:
+  cp-server-code:
+    driver: local
+    driver_opts:
+      type: none
+      device: $REPO
+      o: bind
+  cp-server-keys:
+    driver: local
+    driver_opts:
+      type: none
+      device: $KEYS
+      o: bind
+  cp-server-logs:
+  cp-datadb:
+  cp-configdb:
+  cp-web-root:
+
+networks:
+  stackmatenetwork:
+    driver: bridge

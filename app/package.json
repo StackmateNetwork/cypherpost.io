@@ -1,0 +1,44 @@
+{
+  "name": "cypherpost.io",
+  "version": "0.1.0",
+  "description": "Stackmate web landing content",
+  "main": "main.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/StackmateNetwork/cypherpost.io.git"
+  },
+  "keywords": [
+    "cypherpost",
+    "web",
+    "landing",
+    "content"
+  ],
+  "author": "i5hi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/StackmateNetwork/cypherpost.io/issues"
+  },
+  "homepage": "https://github.com/StackmateNetwork/cypherpost.io#readme",
+  "dependencies": {
+    "@noble/secp256k1": "^1.7.0",
+    "crypto": "^1.0.1",
+    "express": "^4.18.1",
+    "fs": "^0.0.1-security",
+    "helmet": "^6.0.0",
+    "http": "^0.0.1-security",
+    "path": "^0.12.7",
+    "util": "^0.12.4",
+    "uuid": "^9.0.0",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.8.2",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  }
+}
