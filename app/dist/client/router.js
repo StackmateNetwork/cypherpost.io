@@ -11,9 +11,8 @@ Developed @ Stackmate India
 // ------------------ '(◣ ◢)' ---------------------
 var express_1 = __importDefault(require("express"));
 var dto_1 = require("./dto");
-// // ------------------ '(◣ ◢' ---------------------
+// ------------------ '(◣ ◢' ---------------------
 exports.router = express_1.default.Router();
 exports.router.get("/", dto_1.handleGetLandingPage);
-exports.router.get("/primer", dto_1.handleGetPrimerPage);
-// // ------------------ '(◣ ◢)' ---------------------
+// ------------------ '(◣ ◢)' ---------------------
 //# sourceMappingURL=router.js.map

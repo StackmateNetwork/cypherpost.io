@@ -1,7 +1,7 @@
 {
   "name": "cypherpost.io",
   "version": "0.1.0",
-  "description": "Stackmate web landing content",
+  "description": "cypherpost web landing content",
   "main": "main.js",
   "scripts": {
     "test": "npm test",

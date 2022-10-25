@@ -1,7 +1,7 @@
 server {
 	listen 80;
 	listen [::]:80;
-	server_name stackmate.org;
+	server_name cypherpost.io;
 
 	location ~ /.well-known/acme-challenge {
     	allow all;

@@ -17,8 +17,8 @@ WORKDIR /home/node/cypherpost.io/app/
 #------------------------------------------------------------------------------------
 USER node
 
-ENV MOLTRES_PORT="1111"
-ENV TEST_PORT="1111"
+ENV MOLTRES_PORT="1112"
+ENV TEST_PORT="1113"
 ENV KEY_PATH="/home/node/.keys/"
 #------------------------------------------------------------------------------------
 VOLUME ["/home/node/cypherpost.io/app", "/home/node/.keys"]

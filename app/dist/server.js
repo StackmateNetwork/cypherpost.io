@@ -74,7 +74,7 @@ var http = __importStar(require("http"));
 var winston_1 = require("./lib/logger/winston");
 var router_1 = require("./client/router");
 var handler_1 = require("./lib/http/handler");
-var base_path = "/home/node/stackmate.org/app/src/client/public";
+var base_path = "/home/node/cypherpost.io/app/src/client/public";
 // ------------------ '(◣ ◢)' ---------------------
 function start(port) {
     return __awaiter(this, void 0, void 0, function () {

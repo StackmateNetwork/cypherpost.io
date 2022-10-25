@@ -6,54 +6,54 @@ services:
       context: ../../app
       dockerfile: Dockerfile.dev
     image: stackmate-node-ts
-    container_name: cp-website
+    container_name: cpio-website
     restart: unless-stopped
     environment:
-      - APP_PORT=1111
+      - APP_PORT=1112
     ports:
-      - "1111:1111"
+      - "1112:1112"
     volumes:
-      - cp-server-code:/home/node/cypherpost.io/app
-      - cp-server-keys:/home/node/.keys
+      - cpio-server-code:/home/node/cypherpost.io/app
+      - cpio-server-keys:/home/node/.keys
     networks:
-      - cypherpostnetwork
+      - cypherpostionetwork
 
   nginx:
     build:
       context: ../../infra/nginx
       dockerfile: Dockerfile.dev
     image: stackmate-nginx
-    container_name: cp-server
+    container_name: cpio-server
     restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - cp-web-root:/var/www/html
+      - cpio-web-root:/var/www/html
       - ../../infra/nginx/dev/nginx-conf:/etc/nginx/conf.d
     depends_on:
       - node
     networks:
-      - cypherpostnetwork
+      - cypherpostionetwork
 
 volumes:
-  cp-server-code:
+  cpio-server-code:
     driver: local
     driver_opts:
       type: none
       device: $REPO
       o: bind
-  cp-server-keys:
+  cpio-server-keys:
     driver: local
     driver_opts:
       type: none
       device: $KEYS
       o: bind
-  cp-server-logs:
-  cp-datadb:
-  cp-configdb:
-  cp-web-root:
+  cpio-server-logs:
+  cpio-datadb:
+  cpio-configdb:
+  cpio-web-root:
 
 networks:
-  stackmatenetwork:
+  cypherpostionetwork:
     driver: bridge
