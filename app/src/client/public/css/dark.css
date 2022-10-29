@@ -127,7 +127,7 @@ body {
   background-image: url("../img/cpbacks.svg");
   background-attachment:fixed;
   /* background-position: top; */
-  background-position: -100% -2775%;
+  /* background-position: -100% -2775%; */
   background-repeat: no-repeat;
   background-size: 120vw 100vh;
   max-width: 100vw;
