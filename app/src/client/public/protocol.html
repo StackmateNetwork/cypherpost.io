@@ -68,16 +68,14 @@
 
         <div class="row">
             <h2>Specifications</h2>
-            <p>cypherpost is a cryptographic networking protocol which allows server to host a networking platform for peers.</p>
+            <p>cypherpost is a cryptographic networking protocol which allows a server to host a private networking platform for peers.</p>
             <p>The following document describes the protocol and evaluates possible attack vectors on either the server or the peers using the service.</p>
-            <p>cypherpost is a centralized service, this means that it is operated by a single entitiy and has a single point of failure. It is not meant to be used as a large scale public service, rather, to be self-hosted by small groups/businesses to facilitate private networks.</p>
-            <p>Although the service is centralized, the end users achieve certain benefits in being able to verify the authenticity of their messages via digital signatures and also hide the contents of their messages via encryption. </p> 
             
             <h4>Key Format</h4>
             <code>SECPK256K1 (XOnlyKey)</code>
             <br>
             <h4>Signature Scheme</h4>
-            <code>Schnorr</code>
+            <code>Schnorr w/ 24-bit nonce</code>
             <br>
             <h4>Encryption</h4>
             <code>ChaCha20Poly1305 w/ 24-bit nonce & ECDH Shared Secret Hash as Encrytpion Key</code>
@@ -122,8 +120,9 @@
             <code>
             alice:3cade4e832627bd373cade4e809621d373cade4e832627b4f6efac2
             </code>
-
             
+            <p>This pubkey is generated from a Bitcoin standard BIP85 derived BIP39 mnemonic. BIP32 money paths MUST NOT BE USED!</p>
+
             <p>To register an identity, an invite code is required. </p>
             
             <p>Additionally, the request must be signed using the Schnorr Signature Scheme as an authentication method.</p>
@@ -137,15 +136,15 @@
             POST /identity/registration 89ffe344fdcca3ff0299c
             </code>
             
-            <p>It is critical that the message being signed contains a  `nonce`, if not, it is possible for the server to extract the private key from the signature and two messages with the same contents.</p>
+            <p>It is critical that the message being signed contains a `nonce`, if not, it is possible for the server to extract the private key from the signature and two messages with the same contents.</p>
             
             <p>All successive requests to other modules, must also be signed, however, they will also check if the signature belongs to a registered user, else they will be rejected.</p>
             <hr>
             <h4>Announcements</h4>
             <br>
-            <p>The public section of cypherpost. This is how users broadcast public claims about each other in plain text to all users. This can facilitate several use-cases, the most important being a `web of trust`.</p>
+            <p>The public section of cypherpost. This is how users broadcast public claims about each other in plain text to all users. This can facilitate several use-cases, for example building a web-of-trust.</p>
             
-            <p>Every server sets their own limit on the announcements users are allowed to make. </p>
+            <p>Every server sets their own limit on the announcements users are allowed to make.</p>
             
             <p>An annoucnement is just a fixed string, usually a word or a short phrase (without space).</p>
             
@@ -185,6 +184,13 @@
             <p>Since the server accepts only ciphertext, clients can post stringified JSON.</p>
             <p>As long as clients maintain a common data model, they can facilitate their own use cases without the server ever knowing.</p>
             <p>All messages should in addition to the message also add a field for a checksum and a signature to ensure that message autenticity can be verified.</p>
+            
+            <br>
+            <h5>Encryption</h5>
+            <p>Since secp256k1 keys do not support asymmetric/public key encryption, we use the ECDH Shared Secret Scheme to encrypt message decryption keys.</p>
+            <p>Every post is encrypted with a single fresh decryption key, derived incrementally from the Identity mnemonic via BIP85 Hex Application.</p>
+            <p>For every viewer of the post, we encrypt this decryption key with the Shared Secret calculated with the recipient.</p>
+
             <hr>
             <hr>
 
