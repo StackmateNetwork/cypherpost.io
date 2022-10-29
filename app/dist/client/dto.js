@@ -63,7 +63,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleGetLandingPage = void 0;
+exports.handleGetProtocolPage = exports.handleGetLandingPage = void 0;
 var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
 var winston_1 = require("../lib/logger/winston");
@@ -92,4 +92,27 @@ function handleGetLandingPage(req, res) {
     });
 }
 exports.handleGetLandingPage = handleGetLandingPage;
+function handleGetProtocolPage(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var request, exists, result;
+        return __generator(this, function (_a) {
+            request = (0, handler_1.parseRequest)(req);
+            try {
+                exists = fs.existsSync("".concat(base_path, "/protocol.html"));
+                if (!exists)
+                    throw { code: 404, message: { html_exists_at_path: exists } };
+                res.sendFile(path.join(base_path, "/protocol.html"));
+            }
+            catch (e) {
+                result = (0, handler_1.filterError)(e, winston_1.r_500, request);
+                winston_1.logger.debug({
+                    e: e
+                });
+                (0, handler_1.respond)(result.code, result.message, res, request);
+            }
+            return [2 /*return*/];
+        });
+    });
+}
+exports.handleGetProtocolPage = handleGetProtocolPage;
 //# sourceMappingURL=dto.js.map

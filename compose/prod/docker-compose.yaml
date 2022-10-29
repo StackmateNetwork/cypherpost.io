@@ -5,25 +5,25 @@ services:
     build:
       context: ../../app
       dockerfile: Dockerfile.main
-    image: stackmate-node-ts
-    container_name: cp-website
+    image: cypherpostio-node-ts
+    container_name: cpio-website
     restart: unless-stopped
     environment:
-      - APP_PORT=1111
+      - APP_PORT=1112
     ports:
-      - "1111:1111"
+      - "1112:1112"
     volumes:
-      - cp-server-logs:/home/node/winston
-      - cp-server-keys:/home/node/.keys
+      - cpio-server-logs:/home/node/winston
+      - cpio-server-keys:/home/node/.keys
     networks:
-      - cypherpostnetwork
+      - cypherpostionetwork
 
   nginx:
     build:
       context: ../../infra/nginx
       dockerfile: Dockerfile
-    image: stackmate-nginx
-    container_name: cp-server
+    image: cypherpostio-nginx
+    container_name: cpio-server
     restart: unless-stopped
     ports:
       - "80:80"
@@ -35,7 +35,7 @@ services:
       - ../../infra/nginx/prod/nginx-conf:/etc/nginx/conf.d
       - dhparam:/etc/ssl/certs
     networks:
-      - cypherpostnetwork
+      - cypherpostionetwork
 
   certbot:
     image: certbot/certbot
@@ -48,16 +48,16 @@ services:
       - nginx
     command: certonly --webroot --webroot-path=/var/www/html --email i5hi@proton.me --agree-tos --no-eff-email --dry-run -d cypherpost.io
     networks:
-      - cypherpostnetwork
+      - cypherpostionetwork
 
 volumes:
-  cp-server-keys:
+  cpio-server-keys:
     driver: local
     driver_opts:
       type: none
       device: $NODE_VOLUME/.keys
       o: bind
-  cp-server-logs:
+  cpio-server-logs:
     driver: local
     driver_opts:
       type: none
@@ -84,5 +84,5 @@ volumes:
       o: bind
 
 networks:
-  cypherpostnetwork:
+  cypherpostionetwork:
     driver: bridge

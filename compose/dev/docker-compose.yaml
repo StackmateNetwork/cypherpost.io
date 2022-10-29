@@ -5,7 +5,7 @@ services:
     build:
       context: ../../app
       dockerfile: Dockerfile.dev
-    image: stackmate-node-ts
+    image: cypherpostio-node-ts
     container_name: cpio-website
     restart: unless-stopped
     environment:
@@ -22,7 +22,7 @@ services:
     build:
       context: ../../infra/nginx
       dockerfile: Dockerfile.dev
-    image: stackmate-nginx
+    image: cypherpostio-nginx
     container_name: cpio-server
     restart: unless-stopped
     ports:

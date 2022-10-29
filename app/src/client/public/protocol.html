@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta property="og:site_name" content="cypherpost">
+  <meta property="og:description" content="A private comms protocol for bitcoiners.">
+  <meta property="og:image" itemprop="image" content="/img/cpbacks.png">
+  <meta property="og:type" content="website">
+  <meta name="title" content="cypherpost - a bitcoin native, end-to-end encrypted, communication protocol. For private/self-hosted networks.">
+  <meta name="description" content="A simple protocol that allows groups to create their own self-hosted, private communication groups.">
+  <title>cypherpost</title>
+  <!-- Font Awesome -->
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+  rel="stylesheet"
+  />  
+
+
+  <link rel="shortcut icon" type="image/png" href="/img/bitcoin.png" />
+  <link rel="stylesheet" type='text/css' href="/css/mdb.min.css" />
+  <link rel="stylesheet" type='text/css' href="/css/dark.css" />
+
+</head>
+
+<body class="landing">
+
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="outline rightme">
+          <a href="/">
+            <div class="cypherpost-color">
+              <b>HOME</b>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <style>
+
+  </style>
+
+  <br>
+
+  <main>
+    <div class="container">
+  
+        <div class="row">
+            <h1>PROTOCOL</h1>
+        </div>
+        <hr>
+        <div class="row">
+            <h2>Specifications</h2>
+            <p>cypherpost is a cryptographic networking protocol which allows server to host a networking platform for peers.</p>
+            <p>The following document describes the protocol and evaluates possible attack vectors on either the server or the peers using the service.</p>
+            <p>cypherpost is a centralized service, this means that it is operated by a single entitiy and has a single point of failure. It is not meant to be used as a large scale public service, rather, to be self-hosted by small groups/businesses to facilitate private networks.</p>
+            <p>Although the service is centralized, the end users achieve certain benefits in being able to verify the authenticity of their messages via digital signatures and also hide the contents of their messages via encryption. </p> 
+            
+            <h4>Key Format</h4>
+            <code>SECPK256K1 (XOnlyKey)</code>
+            <br>
+            <h4>Signature Scheme</h4>
+            <code>Schnorr</code>
+            <br>
+            <h4>Encryption</h4>
+            <code>ChaCha20Poly1305 w/ 24-bit nonce & ECDH Shared Secret Hash as Encrytpion Key</code>
+        </div>
+        <hr>
+
+        <div class="row">
+            <h3>Server Genesis</h3>
+            <p>We first need a host to run a cypherpost server. Even a novice admin can easily host a server by running a few scripts. [Code](https://github.com/StackmateNetwork/cypherpost)</p>
+            <p>Once the server is running, the host must create an invite code for the first user.</p>
+            <br>
+            <h4>Invite Codes</h4>
+
+            <h5>Standard</h5>
+            <p>A standard invite code can only be used once, by a single user.</p>
+
+            <h5>Privileged</h5>
+
+            <p>Privileged invite codes can only be created by the host.</p>
+
+            <p>A privileged invite code is created with a `count` value which sets how many times it can be used to generate Standard invite codes.</p>
+
+            <p>A privileged user can only generate Standard codes.</p>
+        </div>
+        <hr>
+
+        <div class="row">
+            <h3>Service Modules</h3>
+            <h4>Identity</h4>
+            <p>When a user first registers to the network it must do so by setting an identity for itself.</p>
+            
+            <p>The format for identity on cypherpost is :</p>
+            
+            <code>
+            username:pubkey
+            </code>
+            <p>Example:</p>
+            <code>
+            alice:3cade4e832627bd373cade4e809621d373cade4e832627b4f6efac2
+            </code>
+
+            
+            <p>To register an identity, an invite code is required. </p>
+            
+            <p>Additionally, the request must be signed using the Schnorr Signature Scheme as an authentication method.</p>
+            
+            <p>The message format is</p>
+            <code>
+            $METHOD $RESOURCE $NONCE
+            </code>
+            <p>Example:</p>
+            <code>
+            POST /identity/registration 89ffe344fdcca3ff0299c
+            </code>
+            
+            <p>It is critical that the message being signed contains a  `nonce`, if not, it is possible for the server to extract the private key from the signature and two messages with the same contents.</p>
+            
+            <p>All successive requests to other modules, must also be signed, however, they will also check if the signature belongs to a registered user, else they will be rejected.</p>
+            
+            <h4>Announcements</h4>
+            
+            <p>The public section of cypherpost. This is how users broadcast public claims about each other in plain text to all users. This can facilitate several use-cases, the most important being a `web of trust`.</p>
+            
+            <p>Every server sets their own limit on the announcements users are allowed to make. </p>
+            
+            <p>An annoucnement is just a fixed string, usually a word or a short phrase (without space).</p>
+            
+            <p>The standard announcements are:</p>
+            
+            <p><b>Trust</b></p>
+
+            <p><b>Scam</b></p>
+            
+            <p>Servers can add more as their use case demands. Some other examples are:</p>
+            
+            <p><b>MetInPerson</b></p>
+
+            <p><b>EscrowForTrade</b></p>
+
+            <p><b>EscrowForJob</b></p>
+
+
+            <p>All announcements are signed by the one making them, so that all other users can verify the claim.</p>
+            
+            <p>The announcement format is:</p>
+            <code>
+            $from:$to:$type:$nonce
+            </code>
+            <p>Example:</p>
+            <code>
+            3cade4e832627bd373cade4e809621d373cade4e832627b4f6:e832627bd373cade4e809621d373cade4e8326cade4e832627b4f6:Trust:bcd462132627b4f6
+            </code>
+            
+            <br>
+            <h4>Posts</h4>
+            
+            <p>These are private (e2ee) posts that can either be for another user, or for yourself. </p>
+            <p>This is where cypherpost gets custom to suit your needs.</p>
+            <p>Since the server accepts only ciphertext, clients can post stringified JSON.</p>
+            <p>As long as clients maintain a common data model, they can facilitate their own use cases without the server ever knowing.</p>
+            <p>All messages should in addition to the message also add a field for a checksum and a signature to ensure that message autenticity can be verified.</p>
+            
+            
+        </div>
+        
+        
+    </div>
+  </main>
+  <!-- Footer -->
+  
+  <footer class="page-footer outline font-small teal">
+
+    <!-- Footer Text -->
+    <div class="container-fluid text-center">
+      <!-- Copyright -->
+      <div class="footer-copyright  py-3">
+        <a href="https://cypherpost.io">cypherpost.io</a> 2022
+        <br>
+        <a href="https://github.com/StackmateNetwork"><i class="fab fa-github fa-3x stackmate-color"></i></a>
+        <a href="https://github.com/TomaTechnology"><i class="fas fa-radiation fa-3x yellow-color"></i></a>
+        <a href="https://discord.gg/PdRERkyNt4"><i class="fab fa-telegram fa-3x cold-color"></i></a>
+        <br>
+
+      </div>
+
+    <!-- MDB -->
+    
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+
+    </div>
+
+  </footer>
+
+</body>
+<br>
+
+
+<div class="end-line"></div>
+
+</html>

@@ -23,7 +23,7 @@ height: 69px;
 
 }
 .outline{
-  border: 1px dashed #413e3e;
+  border: 0px dashed #413e3e;
 }
 .logo{
   margin-top: 17px !important;
@@ -265,6 +265,9 @@ background-color: #D0C8CD  ;
   color: #8B00e2 !important;
 }
 
+code{
+  color: #B0E000 !important; 
+}
 /* 009FB7 */
 .auth-ops{
   font-size:21px !important;

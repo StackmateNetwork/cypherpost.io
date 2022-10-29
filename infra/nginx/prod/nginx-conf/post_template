@@ -40,7 +40,7 @@ server {
 	resolver 8.8.8.8;
 
 	location / {
-		proxy_pass http://sm8-website:1111;
+		proxy_pass http://cpio-website:1112;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		proxy_set_header Host $host;
 		add_header X-Frame-Options "SAMEORIGIN" always;

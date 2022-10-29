@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd $HOME/stackmate.org/compose/prod
+cd $HOME/cypherpost.io/compose/prod
 
-CONFIG="$HOME/stackmate.org/infra/nginx/main/nginx-conf"
+CONFIG="$HOME/cypherpost.io/infra/nginx/main/nginx-conf"
 
 cp $CONFIG/pre $CONFIG/default.conf && \
 docker restart server

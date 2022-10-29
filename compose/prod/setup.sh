@@ -59,10 +59,10 @@ cp "$REPO_NGINX_CONF/pre_template" "$REPO_NGINX_CONF/pre"
 
 cp "$REPO_NGINX_CONF/post_template" "$REPO_NGINX_CONF/post" 
 
-echo "[*] Created nginx pre & post conf files with $MY_DOMAIN_NAME as hostname."
+echo "[*] Created nginx pre & post conf files"
 
 touch .env
-echo "COMPOSE_PROJECT_NAME=cypherpost-production" >> .env
+echo "COMPOSE_PROJECT_NAME=cypherpostio-production" >> .env
 echo "REPO=$REPO/app" > .env
 echo "KEYS=$KEYS_VOLUME" >> .env
 echo "NODE_VOLUME=$NODE_VOLUME" >> .env
