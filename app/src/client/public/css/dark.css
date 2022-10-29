@@ -125,7 +125,7 @@ a{
 body {
   background-color: #0A0A0A;
   background-image: url("../img/cpbacks.svg");
-  background-attachment:fixed !important;
+  background-attachment:local !important;
   /* background-position: top; */
   background-position: -150% 200% !important;
   background-repeat: no-repeat !important;

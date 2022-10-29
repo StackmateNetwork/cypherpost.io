@@ -64,6 +64,8 @@
             <h1>PROTOCOL</h1>
         </div>
         <hr>
+        <hr>
+
         <div class="row">
             <h2>Specifications</h2>
             <p>cypherpost is a cryptographic networking protocol which allows server to host a networking platform for peers.</p>
@@ -80,6 +82,7 @@
             <h4>Encryption</h4>
             <code>ChaCha20Poly1305 w/ 24-bit nonce & ECDH Shared Secret Hash as Encrytpion Key</code>
         </div>
+        <hr>
         <hr>
 
         <div class="row">
@@ -101,10 +104,13 @@
             <p>A privileged user can only generate Standard codes.</p>
         </div>
         <hr>
+        <hr>
 
         <div class="row">
             <h3>Service Modules</h3>
+            <hr>
             <h4>Identity</h4>
+            <br>
             <p>When a user first registers to the network it must do so by setting an identity for itself.</p>
             
             <p>The format for identity on cypherpost is :</p>
@@ -134,9 +140,9 @@
             <p>It is critical that the message being signed contains a  `nonce`, if not, it is possible for the server to extract the private key from the signature and two messages with the same contents.</p>
             
             <p>All successive requests to other modules, must also be signed, however, they will also check if the signature belongs to a registered user, else they will be rejected.</p>
-            
+            <hr>
             <h4>Announcements</h4>
-            
+            <br>
             <p>The public section of cypherpost. This is how users broadcast public claims about each other in plain text to all users. This can facilitate several use-cases, the most important being a `web of trust`.</p>
             
             <p>Every server sets their own limit on the announcements users are allowed to make. </p>
@@ -168,16 +174,20 @@
             <code>
             3cade4e832627bd373cade4e809621d373cade4e832627b4f6:e832627bd373cade4e809621d373cade4e8326cade4e832627b4f6:Trust:bcd462132627b4f6
             </code>
-            
+            <p></p>
             <br>
-            <h4>Posts</h4>
             
+            <hr>
+            <h4>Posts</h4>
+            <br>
             <p>These are private (e2ee) posts that can either be for another user, or for yourself. </p>
             <p>This is where cypherpost gets custom to suit your needs.</p>
             <p>Since the server accepts only ciphertext, clients can post stringified JSON.</p>
             <p>As long as clients maintain a common data model, they can facilitate their own use cases without the server ever knowing.</p>
             <p>All messages should in addition to the message also add a field for a checksum and a signature to ensure that message autenticity can be verified.</p>
-            
+            <hr>
+            <hr>
+
             
         </div>
         
