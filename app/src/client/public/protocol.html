@@ -67,22 +67,10 @@
         <hr>
 
         <div class="row">
-            <h2>Specifications</h2>
+            <h2>Overview</h2>
             <p>cypherpost is a cryptographic networking protocol which allows a server to host a private networking platform for peers.</p>
             <p>The following document describes the protocol and evaluates possible attack vectors on either the server or the peers using the service.</p>
-            
-            <h4>Key Format</h4>
-            <code>SECPK256K1 (XOnlyKey)</code>
-            <br>
-            <h4>Signature Scheme</h4>
-            <code>Schnorr w/ 24-bit nonce</code>
-            <br>
-            <h4>Encryption</h4>
-            <code>ChaCha20Poly1305 w/ 24-bit nonce & ECDH Shared Secret Hash as Encrytpion Key</code>
-        </div>
         <hr>
-        <hr>
-
         <div class="row">
             <h3>Server Genesis</h3>
             <p>We first need a host to run a cypherpost server. Even a novice admin can easily host a server by running a few scripts. [Code](https://github.com/StackmateNetwork/cypherpost)</p>
@@ -194,9 +182,63 @@
             <hr>
             <hr>
 
-            
         </div>
-        
+
+        <div class="row">
+          <h2>Specifications</h2>
+
+          <h4>Key Format</h4>
+          <code>SECPK256K1 (XOnlyKey)</code>
+          <br>
+          <h4>Signature Scheme</h4>
+          <code>Schnorr w/ 96-bit nonce</code>
+          <br>
+          <h4>Encryption</h4>
+          <code>ChaCha20Poly1305 w/ 96-bit nonce & 256-bit encryption key.</code>
+          
+          <h3>User Key Management</h3>
+          <p>Mnemonic: 12/24 words that represent the top level UI of bitcoin keys.</p>
+          <p>Passphrase: An optional addition to the mnemonic to add some extra entropy.</p>
+          <p>Seed: Mnemonic + Passphrase hashed together is the seed - the entry point into deterministic entropy.</p>
+          <p>XKey: The seed converted into a format ready for deterministic derivation of child keys. </p>
+          <p>BIP32/85 Derivation: Schemes are defined for the commonly agreed upon paths used for key derivation for key managers to maintain compatability for recovery and migration.</p>
+
+          <p>Always create separate SocialMnemonic and RootMnemonic. We recommend 24 words for money and 12 for social.</p>
+          <code>***(RootMnemonic+RootPP = RootSeed)***->RootXKey-BIP32>WalletRootKeys</code>
+          <br>
+          <code>RootSeed->RootXKey-BIP85->***(SocialMnemonic+SocialPP = SocialSeed)***->SocialXKey->SocialAppKey*.</code>
+          <p>This allows you to use the SocialMnemonic independently without compromising your RootMnemonic & WalletRootKeys.</p>
+
+          <h4>ServiceRoot</h4>
+          <p>The first level of derivation from the SocialSeed is the Service Root.</p>
+          <p>Derive the Service Root at BIP85 Application 32'.</p>
+          <code>SocialSeed/83696968'/32'/{service}'</code>
+          <p>{service} is incremented per service. Do not reuse the same key on different servers.</p>
+
+          <h4>ApplicationRoot</h4>
+          <p>Derived from ServiceRoot and segregated based on application within the service.</p>
+          
+          <h5>IdentityRoot</h5>
+          <p>Derived for identity and authentication.</p>
+          <p>This is the only key that is never incremented.</p>
+          <code>ServiceRoot/83696968'/2'/{id}</code>
+          <p>{id} is incremented per identity on the same service.</p>
+
+          <h5>PostRoot</h5>
+          <p>Derived for encryption.</p>
+          <code>ServiceRoot/83696968'/128169'/64'/{r}'/{i}'</code>
+          <p>{r} stands for rotate which is used when in doubt about your last derived key, increment r.</p>
+          <p>{i} stands for index and is incremented for every new post.</p>
+          <p>Every derived PostRoot is hashed before use as an encryption key.</p>
+          <code>SHA256(PostRoot)->PostEncryptionKey</code>
+
+          <p></p>
+          <p></p>
+          <p></p>
+
+      </div>
+      <hr>
+      <hr>
         
     </div>
   </main>
