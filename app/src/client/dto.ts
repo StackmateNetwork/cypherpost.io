@@ -41,3 +41,19 @@ export async function handleGetProtocolPage(req, res) {
     respond(result.code, result.message, res, request);
   }
 }
+
+export async function handleGetTreasurePage(req, res) {
+  const request = parseRequest(req);
+  try {
+    const exists = fs.existsSync(`${base_path}/treasure.html`);
+    if (!exists) throw { code: 404, message: { html_exists_at_path: exists } };
+
+    res.sendFile(path.join(base_path, "/treasure.html"));
+  } catch (e) {
+    let result = filterError(e, r_500, request);
+    logger.debug({
+      e
+    });
+    respond(result.code, result.message, res, request);
+  }
+}

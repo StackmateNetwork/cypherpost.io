@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------------
-FROM node:14.5.0-buster
+FROM node:18.0.0-buster
 #------------------------------------------------------------------------------------
 USER root
 ENV USER_ID=1000
@@ -12,10 +12,10 @@ RUN usermod -u $USER_ID node
 RUN mkdir -p /home/node/cypherpost.io/app /home/node/.keys
 
 RUN chown -R node /home/node/cypherpost.io/app /home/node/.keys
-WORKDIR /home/node/cypherpost.io/app/
 
 #------------------------------------------------------------------------------------
 USER node
+WORKDIR /home/node/cypherpost.io/app/
 
 ENV MOLTRES_PORT="1112"
 ENV TEST_PORT="1113"

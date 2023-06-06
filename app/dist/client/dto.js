@@ -41,7 +41,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -63,7 +63,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleGetProtocolPage = exports.handleGetLandingPage = void 0;
+exports.handleGetTreasurePage = exports.handleGetProtocolPage = exports.handleGetLandingPage = void 0;
 var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
 var winston_1 = require("../lib/logger/winston");
@@ -115,4 +115,27 @@ function handleGetProtocolPage(req, res) {
     });
 }
 exports.handleGetProtocolPage = handleGetProtocolPage;
+function handleGetTreasurePage(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var request, exists, result;
+        return __generator(this, function (_a) {
+            request = (0, handler_1.parseRequest)(req);
+            try {
+                exists = fs.existsSync("".concat(base_path, "/treasure.html"));
+                if (!exists)
+                    throw { code: 404, message: { html_exists_at_path: exists } };
+                res.sendFile(path.join(base_path, "/treasure.html"));
+            }
+            catch (e) {
+                result = (0, handler_1.filterError)(e, winston_1.r_500, request);
+                winston_1.logger.debug({
+                    e: e
+                });
+                (0, handler_1.respond)(result.code, result.message, res, request);
+            }
+            return [2 /*return*/];
+        });
+    });
+}
+exports.handleGetTreasurePage = handleGetTreasurePage;
 //# sourceMappingURL=dto.js.map

@@ -9,24 +9,17 @@
   <meta property="og:description" content="A private comms protocol for bitcoiners.">
   <meta property="og:image" itemprop="image" content="/img/cpbacks.png">
   <meta property="og:type" content="website">
-  <meta name="title" content="cypherpost - a bitcoin native, end-to-end encrypted, communication protocol. For private/self-hosted networks.">
-  <meta name="description" content="A simple protocol that allows groups to create their own self-hosted, private communication groups.">
+  <meta name="title"
+    content="cypherpost - a bitcoin native, end-to-end encrypted, communication protocol. For private/self-hosted networks.">
+  <meta name="description"
+    content="A simple protocol that allows groups to create their own self-hosted, private communication groups.">
   <title>cypherpost</title>
   <!-- Font Awesome -->
-  <link
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  rel="stylesheet"
-  />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <!-- Google Fonts -->
-  <link
-  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-  rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
   <!-- MDB -->
-  <link
-  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
-  rel="stylesheet"
-  />  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet" />
 
 
   <link rel="shortcut icon" type="image/png" href="/img/bitcoin.png" />
@@ -39,14 +32,19 @@
 
   <header>
     <div class="container">
-      <div class="row">
-        <div class="outline rightme">
-          <a href="/">
-            <div class="cypherpost-color">
-              <b>HOME</b>
-            </div>
-          </a>
-        </div>
+      <div class="row outline rightme">
+        <a href="/">
+          <div class="cypherpost-color">
+            <b>HOME</b>
+          </div>
+        </a>
+      </div>
+      <div class="row outline rightme">
+        <a href="/treasure">
+          <div class="cypherpost-color">
+            <b>TREASURE</b>
+          </div>
+        </a>
       </div>
     </div>
   </header>
@@ -59,17 +57,19 @@
 
   <main>
     <div class="container">
-  
-        <div class="row">
-            <h1>PROTOCOL</h1>
-        </div>
-        <hr>
-        <hr>
 
-        <div class="row">
-            <h2>Overview</h2>
-            <p>cypherpost is a cryptographic networking protocol which allows a server to host a private networking platform for peers.</p>
-            <p>The following document describes the protocol and evaluates possible attack vectors on either the server or the peers using the service.</p>
+      <div class="row">
+        <h1>PROTOCOL</h1>
+      </div>
+      <hr>
+      <hr>
+
+      <div class="row">
+        <h2>Overview</h2>
+        <p>cypherpost is a cryptographic networking protocol which allows a server to host a private networking platform
+          for peers.</p>
+        <p>The following document describes the protocol and evaluates possible attack vectors on either the server or
+          the peers using the service.</p>
         <hr>
         <div class="row">
           <h2>Specifications</h2>
@@ -82,10 +82,10 @@
           <br>
           <h4>Encryption</h4>
           <code>ChaCha20Poly1305 w/ 96-bit nonce & 256-bit encryption key.</code>
-          
+
           <h3>User Key Management</h3>
           <h4>Definitions</h4>
-          
+
           <h5>Mnemonic</h5>
           <p>12/24 words that represent the top level UI of bitcoin keys.</p>
 
@@ -99,16 +99,20 @@
           <p>The seed converted into a format ready for deterministic derivation of child keys. </p>
 
           <h5>BIP32/85 Derivation</h5>
-          <p>Schemes are defined for the commonly agreed upon paths used for key derivation for key managers to maintain compatability for recovery and migration.</p>
+          <p>Schemes are defined for the commonly agreed upon paths used for key derivation for key managers to maintain
+            compatability for recovery and migration.</p>
 
 
           <h4>Key Chain Genesis</h4>
-          <p>Ideally, as a user you should be able to recover their entire wallet and data with a single seed (RootMnemonic).</p>
-          <p>Always create separate a SocialMnemonic that can be derived from your RootMnemonic. We recommend 24 words for money and 12 for social.</p>
+          <p>Ideally, as a user you should be able to recover their entire wallet and data with a single seed
+            (RootMnemonic).</p>
+          <p>Always create separate a SocialMnemonic that can be derived from your RootMnemonic. We recommend 24 words
+            for money and 12 for social.</p>
           <code>***(RootMnemonic+RootPP = RootSeed)***->RootXKey-BIP32>WalletRootKeys</code>
           <br>
           <code>RootSeed->RootXKey-BIP85->***(SocialMnemonic+SocialPP = SocialSeed)***->SocialXKey->SocialAppKey*.</code>
-          <p>This allows you to use the SocialMnemonic independently without compromising your RootMnemonic & WalletRootKeys.</p>
+          <p>This allows you to use the SocialMnemonic independently without compromising your RootMnemonic &
+            WalletRootKeys.</p>
 
           <h4>ServiceRoot</h4>
           <p>The first level of derivation from the SocialSeed is the Service Root.</p>
@@ -118,7 +122,7 @@
 
           <h4>ApplicationRoot</h4>
           <p>Derived from ServiceRoot and segregated based on application within the service.</p>
-          
+
           <h5>IdentityRoot</h5>
           <p>Derived for identity and authentication.</p>
           <p>This is the only key that is never incremented.</p>
@@ -137,128 +141,140 @@
           <p></p>
           <p></p>
 
-      </div>
-      <hr>
-      <hr>
+        </div>
+        <hr>
+        <hr>
         <div class="row">
-            <h3>Server Genesis</h3>
-            <p>We first need a host to run a cypherpost server. Even a novice admin can easily host a server by running a few scripts. [Code](https://github.com/StackmateNetwork/cypherpost)</p>
-            <p>Once the server is running, the host must create an invite code for the first user.</p>
-            <br>
-            <h4>Invite Codes</h4>
+          <h3>Server Genesis</h3>
+          <p>We first need a host to run a cypherpost server. Even a novice admin can easily host a server by running a
+            few scripts. [Code](https://github.com/StackmateNetwork/cypherpost)</p>
+          <p>Once the server is running, the host must create an invite code for the first user.</p>
+          <br>
+          <h4>Invite Codes</h4>
 
-            <h5>Standard</h5>
-            <p>A standard invite code can only be used once, by a single user.</p>
+          <h5>Standard</h5>
+          <p>A standard invite code can only be used once, by a single user.</p>
 
-            <h5>Privileged</h5>
+          <h5>Privileged</h5>
 
-            <p>Privileged invite codes can only be created by the host.</p>
+          <p>Privileged invite codes can only be created by the host.</p>
 
-            <p>A privileged invite code is created with a `count` value which sets how many times it can be used to generate Standard invite codes.</p>
+          <p>A privileged invite code is created with a `count` value which sets how many times it can be used to
+            generate Standard invite codes.</p>
 
-            <p>A privileged user can only generate Standard codes.</p>
+          <p>A privileged user can only generate Standard codes.</p>
         </div>
         <hr>
         <hr>
 
         <div class="row">
-            <h3>Service Modules</h3>
-            <hr>
-            <h4>Identity</h4>
-            <br>
-            <p>When a user first registers to the network it must do so by setting an identity for itself.</p>
-            
-            <p>The format for identity on cypherpost is :</p>
-            
-            <code>
+          <h3>Service Modules</h3>
+          <hr>
+          <h4>Identity</h4>
+          <br>
+          <p>When a user first registers to the network it must do so by setting an identity for itself.</p>
+
+          <p>The format for identity on cypherpost is :</p>
+
+          <code>
             username:pubkey
             </code>
-            <p>Example:</p>
-            <code>
+          <p>Example:</p>
+          <code>
             alice:3cade4e832627bd373cade4e809621d373cade4e832627b4f6efac2
             </code>
-            
-            <p>This pubkey is generated from a Bitcoin standard BIP85 derived BIP39 mnemonic. BIP32 money paths MUST NOT BE USED!</p>
 
-            <p>To register an identity, an invite code is required. </p>
-            
-            <p>Additionally, the request must be signed using the Schnorr Signature Scheme as an authentication method.</p>
-            
-            <p>The message format is</p>
-            <code>
+          <p>This pubkey is generated from a Bitcoin standard BIP85 derived BIP39 mnemonic. BIP32 money paths MUST NOT
+            BE USED!</p>
+
+          <p>To register an identity, an invite code is required. </p>
+
+          <p>Additionally, the request must be signed using the Schnorr Signature Scheme as an authentication method.
+          </p>
+
+          <p>The message format is</p>
+          <code>
             $METHOD $RESOURCE $NONCE
             </code>
-            <p>Example:</p>
-            <code>
+          <p>Example:</p>
+          <code>
             POST /identity/registration 89ffe344fdcca3ff0299c
             </code>
-            
-            <p>It is critical that the message being signed contains a `nonce`, if not, it is possible for the server to extract the private key from the signature and two messages with the same contents.</p>
-            
-            <p>All successive requests to other modules, must also be signed, however, they will also check if the signature belongs to a registered user, else they will be rejected.</p>
-            <hr>
-            <h4>Announcements</h4>
-            <br>
-            <p>The public section of cypherpost. This is how users broadcast public claims about each other in plain text to all users. This can facilitate several use-cases, for example building a web-of-trust.</p>
-            
-            <p>Every server sets their own limit on the announcements users are allowed to make.</p>
-            
-            <p>An annoucnement is just a fixed string, usually a word or a short phrase (without space).</p>
-            
-            <p>The standard announcements are:</p>
-            
-            <p><b>Trust</b></p>
 
-            <p><b>Scam</b></p>
-            
-            <p>Servers can add more as their use case demands. Some other examples are:</p>
-            
-            <p><b>MetInPerson</b></p>
+          <p>It is critical that the message being signed contains a `nonce`, if not, it is possible for the server to
+            extract the private key from the signature and two messages with the same contents.</p>
 
-            <p><b>EscrowForTrade</b></p>
+          <p>All successive requests to other modules, must also be signed, however, they will also check if the
+            signature belongs to a registered user, else they will be rejected.</p>
+          <hr>
+          <h4>Announcements</h4>
+          <br>
+          <p>The public section of cypherpost. This is how users broadcast public claims about each other in plain text
+            to all users. This can facilitate several use-cases, for example building a web-of-trust.</p>
 
-            <p><b>EscrowForJob</b></p>
+          <p>Every server sets their own limit on the announcements users are allowed to make.</p>
+
+          <p>An annoucnement is just a fixed string, usually a word or a short phrase (without space).</p>
+
+          <p>The standard announcements are:</p>
+
+          <p><b>Trust</b></p>
+
+          <p><b>Scam</b></p>
+
+          <p>Servers can add more as their use case demands. Some other examples are:</p>
+
+          <p><b>MetInPerson</b></p>
+
+          <p><b>EscrowForTrade</b></p>
+
+          <p><b>EscrowForJob</b></p>
 
 
-            <p>All announcements are signed by the one making them, so that all other users can verify the claim.</p>
-            
-            <p>The announcement format is:</p>
-            <code>
+          <p>All announcements are signed by the one making them, so that all other users can verify the claim.</p>
+
+          <p>The announcement format is:</p>
+          <code>
             $from:$to:$type:$nonce
             </code>
-            <p>Example:</p>
-            <code>
+          <p>Example:</p>
+          <code>
             3cade4e832627bd373cade4e809621d373cade4e832627b4f6:e832627bd373cade4e809621d373cade4e8326cade4e832627b4f6:Trust:bcd462132627b4f6
             </code>
-            <p></p>
-            <br>
-            
-            <hr>
-            <h4>Posts</h4>
-            <br>
-            <p>These are private (e2ee) posts that can either be for another user, or for yourself. </p>
-            <p>This is where cypherpost gets custom to suit your needs.</p>
-            <p>Since the server accepts only ciphertext, clients can post stringified JSON.</p>
-            <p>As long as clients maintain a common data model, they can facilitate their own use cases without the server ever knowing.</p>
-            <p>All messages should in addition to the message also add a field for a checksum and a signature to ensure that message autenticity can be verified.</p>
-            
-            <br>
-            <h5>Encryption</h5>
-            <p>Since secp256k1 keys do not support asymmetric/public key encryption, we use the ECDH Shared Secret Scheme to encrypt message decryption keys.</p>
-            <p>Every post is encrypted with a single fresh decryption key, derived incrementally from the Identity mnemonic via BIP85 Hex Application.</p>
-            <p>For every viewer of the post, we encrypt this decryption key with the Shared Secret calculated with the recipient.</p>
+          <p></p>
+          <br>
 
-            <hr>
-            <hr>
+          <hr>
+          <h4>Posts</h4>
+          <br>
+          <p>These are private (e2ee) posts that can either be for another user, or for yourself. </p>
+          <p>This is where cypherpost gets custom to suit your needs.</p>
+          <p>Since the server accepts only ciphertext, clients can post stringified JSON.</p>
+          <p>As long as clients maintain a common data model, they can facilitate their own use cases without the server
+            ever knowing.</p>
+          <p>All messages should in addition to the message also add a field for a checksum and a signature to ensure
+            that message autenticity can be verified.</p>
+
+          <br>
+          <h5>Encryption</h5>
+          <p>Since secp256k1 keys do not support asymmetric/public key encryption, we use the ECDH Shared Secret Scheme
+            to encrypt message decryption keys.</p>
+          <p>Every post is encrypted with a single fresh decryption key, derived incrementally from the Identity
+            mnemonic via BIP85 Hex Application.</p>
+          <p>For every viewer of the post, we encrypt this decryption key with the Shared Secret calculated with the
+            recipient.</p>
+
+          <hr>
+          <hr>
 
         </div>
 
 
-        
-    </div>
+
+      </div>
   </main>
   <!-- Footer -->
-  
+
   <footer class="page-footer outline font-small teal">
 
     <!-- Footer Text -->
@@ -274,9 +290,9 @@
 
       </div>
 
-    <!-- MDB -->
-    
-    <script type="text/javascript" src="/js/mdb.min.js"></script>
+      <!-- MDB -->
+
+      <script type="text/javascript" src="/js/mdb.min.js"></script>
 
     </div>
 

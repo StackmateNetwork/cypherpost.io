@@ -15,5 +15,6 @@ var dto_1 = require("./dto");
 exports.router = express_1.default.Router();
 exports.router.get("/", dto_1.handleGetLandingPage);
 exports.router.get("/protocol", dto_1.handleGetProtocolPage);
+exports.router.get("/treasure", dto_1.handleGetTreasurePage);
 // ------------------ '(◣ ◢)' ---------------------
 //# sourceMappingURL=router.js.map
